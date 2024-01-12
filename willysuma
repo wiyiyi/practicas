@@ -1,0 +1,16 @@
+def suma():
+     n=int (input("dame numero 1:")) 
+     n1=int (input("dame numero 2:")) 
+     r=n+n1
+     print (r)
+
+
+def sumad(n,n1):
+    sum=n+n1
+    print (sum)
+
+
+
+
+suma()
+sumad(2,2)
