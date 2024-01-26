@@ -14,11 +14,14 @@ print(infotriangulo())
 
 def infopentagono():
     print("se calcula con perimetro*altura/2")
+print(infopentagono())
+
 
 def inforectangulo():
     return "se calcula con base*altura"
+print(inforectangulo())
 
-opcion=0
+
 def menudefiguras(opcion):
  
     Opcion=int (input("di un numero:"))
