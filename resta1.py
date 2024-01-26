@@ -7,7 +7,7 @@ def resta ():
 
 def resta3 (n,n1):
      rest=n-n1
-     print (resta)
+     print (rest)
 
 resta()
 resta3(3,2)
