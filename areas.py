@@ -21,7 +21,7 @@ def inforectangulo():
     return "se calcula con base*altura"
 print(inforectangulo())
 
-
+opcion=0
 def menudefiguras(opcion):
  
     Opcion=int (input("di un numero:"))
