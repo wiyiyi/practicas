@@ -5,7 +5,7 @@ import subprocess
 def cerrar_y_abrir():
     # Cierra la ventana actual
     vent.destroy()
-    vent2= "gastosmedicos.py"
+    vent2= "ventas2.0.py"
     subprocess.run(["python", vent2])
 
 vent= tk.Tk()
