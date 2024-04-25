@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image, ImageTk
 
 # Función para validar el inicio de sesión
 def validar_login():
@@ -9,7 +10,7 @@ def validar_login():
     clave = entry_clave.get()
 
     # Comprobar las credenciales
-    if usuario == "pac" and clave == "1234":
+    if usuario == "" and clave == "":
         messagebox.showinfo("Inicio de sesión", "Inicio de sesión exitoso")
         abrir_ventana_enfermedades()
     else:
@@ -24,6 +25,8 @@ def abrir_ventana_enfermedades():
     ventana_enfermedades = tk.Tk()
     ventana_enfermedades.title("Selección de Enfermedad")
     ventana_enfermedades.geometry("300x150")
+
+    
 
     # Crear un marco para organizar los widgets
     frame_enfermedades = ttk.LabelFrame(ventana_enfermedades, text="Enfermedades", labelanchor="n")
@@ -44,6 +47,8 @@ def abrir_ventana_enfermedades():
     button_seleccionar = ttk.Button(frame_enfermedades, text="Seleccionar", command=lambda: abrir_ventana_tratamiento(ventana_enfermedades, selected_disease.get()))
     button_seleccionar.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
 
+    ventana_enfermedades.bind('<Return>', lambda event=None: button_seleccionar.invoke())
+
     ventana_enfermedades.mainloop()
 
 # Función para abrir la ventana de tratamiento
@@ -55,6 +60,7 @@ def abrir_ventana_tratamiento(ventana_enfermedades, enfermedad):
     ventana_tratamiento = tk.Tk()
     ventana_tratamiento.title("Tratamiento para " + enfermedad)
     ventana_tratamiento.geometry("400x250")
+    ventana_tratamiento.config(background="#FFFFFF")
 
     # Crear un marco para organizar los widgets
     frame_tratamiento = ttk.LabelFrame(ventana_tratamiento, text="Tratamiento para " + enfermedad, labelanchor="n")
@@ -81,6 +87,8 @@ def abrir_ventana_tratamiento(ventana_enfermedades, enfermedad):
     # Botón para cobrar el tratamiento
     button_cobrar = ttk.Button(frame_tratamiento, text="Cobrar", command=lambda: cobrar_tratamiento(ventana_tratamiento, entry_tratamiento.get(), entry_precio.get(), entry_meses.get()))
     button_cobrar.grid(row=3, columnspan=2, padx=5, pady=10, sticky="ew")
+
+    ventana_tratamiento.bind('<Return>', lambda event=None: button_cobrar.invoke())
 
     ventana_tratamiento.mainloop()
 
@@ -134,44 +142,61 @@ def graficar_gastos(monto, intereses, monto_total, meses):
     # Configurar etiquetas
     ax.set_xlabel('Meses', fontsize=12)
     ax.set_ylabel('Monto ($)', fontsize=12)
-    ax.set_title('Cobro del tratamiento a lo largo del tiempo', fontsize=14)
+    ax.set_title('INTERESES MENSUALES', fontsize=14)
 
     plt.show()
 
 # Configuración de la ventana de inicio de sesión
+import tkinter as tk
+
+
+# Crear ventana principal
 ventana_login = tk.Tk()
 ventana_login.title("Inicio de Sesión")
-ventana_login.geometry("1000x1000")
+ventana_login.geometry("410x400") 
 ventana_login.config(background="#FDFEFE")
 
-#etiqueta de bienvenida
-buenvenida=tk.Label(ventana_login,text="Bienvenido a la Clinica")
-buenvenida.grid()
-bienvenido_label = tk.Label(ventana_login, text="CLINICA DEDE", font=("cocogoose 29"), fg="#85C1E9")
-bienvenido_label.grid()
+# Etiqueta de bienvenida
+bienvenida_label = tk.Label(ventana_login, text="BIENVENIDO A CLINICA MART", font=("Georgia", 12,"bold"), fg="#85C1E9", background="#FDFEFE")
+bienvenida_label.pack(padx=(30),fill="both")  
 
-marco = tk.LabelFrame(ventana_login, text="INICIO DE SESION", bg="#D6EAF8", relief=tk.RAISED, padx=20, pady=20,font="arial 9")
-marco.grid()
+# Marco para el formulario de inicio de sesión
+marco = tk.LabelFrame(ventana_login, text="INICIO DE SESION", bg="#D6EAF8", relief=tk.RAISED, font="Arial 8")
+marco.pack(padx=20, pady=10)
 
-etiquetas = [("Usuario:",0, 0), ("Contraseña:", 1, 0)]
+
+etiquetas = [("Usuario:", 0, 0), ("Contraseña:", 1, 0)]
 
 for etiqueta, fila, columna in etiquetas:
-    tk.Label(marco, text=etiqueta, bg="#D6EAF8", font=("Arial", 12)).grid(row=fila, column=columna, pady=5, sticky="w")
+    tk.Label(marco, text=etiqueta, bg="#D6EAF8", font=("Centaur", 15)).grid(row=fila, column=columna, pady=5, sticky="we")
 
-entry_usuario = tk.Entry(marco, font=("Arial", 12))
+entry_usuario = tk.Entry(marco, font=("Arial", 12),relief=tk.FLAT)
 entry_usuario.grid(row=0, column=1, padx=10, pady=5, sticky="w")
 
-entry_clave = tk.Entry(marco, show="*", font=("Arial", 12))
+entry_clave = tk.Entry(marco, show="*", font=("Arial", 12),relief=tk.FLAT)
 entry_clave.grid(row=1, column=1, padx=10, pady=5, sticky="w")
 
-boton_login = tk.Button(marco, text="Iniciar Sesión", command= validar_login, font=("Arial", 12), bg="#48C9B0", fg="white") 
-boton_login.grid(row=2, columnspan=2, pady=10)
+boton_login = tk.Button(marco, text="Iniciar Sesión", command=validar_login, font=("Arial", 12), bg="#48C9B0", fg="white")
+boton_login.grid(row=2, columnspan=2, sticky="") 
 
-recuperar_button = tk.Button(marco, text="Recuperar contraseña", font=("Arial", 10), fg="#922B21",background="#E6B0AA", command="")
-recuperar_button.grid(row=3, columnspan=2, pady=10)
+recuperar_button = tk.Button(marco, text="Recuperar contraseña", font=("Arial", 10), fg="#922B21", bg="#E6B0AA", command="")
+recuperar_button.grid(row=3, columnspan=2, pady=10, sticky="")  
+
+
+imagen = Image.open("h.png")
+imagen = imagen.resize((50, 50))  # Redimensionar la imagen si es necesario
+imagen_tk = ImageTk.PhotoImage(imagen)
+label_imagen = tk.Label(marco, image=imagen_tk,bg="#D6EAF8")
+label_imagen.grid(padx=30, pady=2,row=3,column=0)
+
+imagen2 = Image.open("pacman.png")
+imagen2 = imagen2.resize((50, 50))  # Redimensionar la imagen si es necesario
+imagen_tk2 = ImageTk.PhotoImage(imagen2)
+label_imagen2 = tk.Label(ventana_login, image=imagen_tk2,bg="#FFFFFF")
+label_imagen2.pack()
+
 
 ventana_login.bind('<Return>', lambda event=None: boton_login.invoke())
 
 # Iniciar el bucle principal
 ventana_login.mainloop()
-
